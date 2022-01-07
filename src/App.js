@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import "./styles.css";
+import RateMovie from "./Components/RateMovie";
+import SearchMovie from "./Components/SearchMovie";
+import { returnNewMovieObj } from "./utils";
+export default function App() {
+  const [allMovies, setAllMovies] = useState({});
 
-function App() {
+  const handleRateMovie = ({ movie, rating, duration }) => {
+    setAllMovies((prevAllMoviesObj) => {
+      const newObj = returnNewMovieObj({
+        prevAllMoviesObj,
+        movie,
+        rating,
+        duration
+      });
+      console.log("newObj ", newObj);
+      return newObj;
+    });
+  };
+
+  // useEffect(()=> {
+  //   console.log("all movies ", allMovies);
+  // })
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Rate your favorite movies</h1>
+      <RateMovie handleRateMovie={handleRateMovie} />
+      <SearchMovie allMovies={allMovies} />
     </div>
   );
 }
-
-export default App;
