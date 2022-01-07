@@ -44,7 +44,7 @@ const SearchMovie = ({allMovies}) => {
             if(dbouncedsetSearchQueryFun)
             dbouncedsetSearchQueryFun.cancel();
         }
-    }, []);
+    });
 
     return (
         <div>
