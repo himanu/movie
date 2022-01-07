@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./styles.css";
 import RateMovie from "./Components/RateMovie";
 import SearchMovie from "./Components/SearchMovie";
@@ -14,14 +14,9 @@ export default function App() {
         rating,
         duration
       });
-      console.log("newObj ", newObj);
       return newObj;
     });
   };
-
-  // useEffect(()=> {
-  //   console.log("all movies ", allMovies);
-  // })
 
   return (
     <div className="App">

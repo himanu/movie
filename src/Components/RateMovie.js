@@ -22,6 +22,7 @@ const RateMovie = ({ handleRateMovie }) => {
             type="text"
             value={movie}
             onChange={(e) => setMovie(e.target.value)}
+            required
           ></input>
         </div>
         <div className="mb-3">
@@ -32,6 +33,9 @@ const RateMovie = ({ handleRateMovie }) => {
             type="number"
             value={rating}
             onChange={(e) => setRating(e.target.value)}
+            min={0}
+            max={5}
+            required
           ></input>
         </div>
         <div className="mb-3">
@@ -42,6 +46,8 @@ const RateMovie = ({ handleRateMovie }) => {
             type="number"
             value={duration}
             onChange={(e) => setDuration(e.target.value)}
+            min={0}
+            required
           ></input>
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>

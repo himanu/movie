@@ -4,47 +4,47 @@ import debounce from 'lodash.debounce';
 const SearchMovie = ({allMovies}) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredMovies, setFilteredMovies] = useState([]);
-    // let filteredMovies = [];
+
     useEffect(()=>{
+        // update the filteredMovies whenever searchQuery or movies list changes
         let newFilteredMovies = [];
         for(const movie in allMovies) {
             if(movie.includes(searchQuery)) {
-                const rating = allMovies[movie]['rating'];
-                const durationInMinutes = allMovies[movie]['duration'];
+                const {rating, duration: durationInMinutes} = allMovies[movie];
                 const hour = Math.floor(durationInMinutes/60);
                 const min = Math.floor(durationInMinutes%60);
-                newFilteredMovies.push({
-                    movieDetails: {
-                        movieName: movie,
-                        rating,
-                        duration: `${hour}h ${min}m`
-                    }
-                });
+                const duration = `${hour}h ${min}m`;
+                newFilteredMovies.push(
+                    <tr key={movie}>
+                        <td>
+                            {movie}
+                        </td>
+                        <td>
+                            {rating}
+                        </td>
+                        <td>
+                            {duration}
+                        </td>
+                    </tr>
+                )
             }
         }
         setFilteredMovies(newFilteredMovies);
 
     }, [searchQuery, allMovies]);
     
+    // Debouncing code
     const dbouncedsetSearchQueryFun = useMemo(()=>{
-
-        return debounce((e)=>{console.log("Hii Himanshu");setSearchQuery(e.target.value)}, 500);
+        return debounce((e)=>{setSearchQuery(e.target.value)}, 500);
     }, []);
 
     useEffect(()=> {
-        console.log("all movies ", allMovies);
-        console.log("searchQuery ", searchQuery);
-        console.log("filteredMovies1 ", filteredMovies);
-    })
-    useEffect(()=> {
+        //Debouncing cleanup
         return ()=> {
             if(dbouncedsetSearchQueryFun)
             dbouncedsetSearchQueryFun.cancel();
         }
     }, []);
-    // const getMovie = () => {
-        
-    // }
 
     return (
         <div>
@@ -61,30 +61,11 @@ const SearchMovie = ({allMovies}) => {
                     </tr>
                 </thead>
                 <tbody>
-                {filteredMovies.map.length === 0 && (
+                {filteredMovies.length === 0 ? (
                     <tr>
-                        <td colSpan={3}> No movies matches your search</td>
+                        <td colSpan={3}> {Object.keys(allMovies).length === 0 ? `Movie list is empty, please add movie` : `No movies matches your search`} </td>
                     </tr>
-                )} 
-                {filteredMovies.map((currMovie) => {
-                    console.log("movieName ", currMovie, ' fil ', filteredMovies);
-                    const {movieName, rating, duration} = currMovie['movieDetails'];
-                    if(movieName.includes(searchQuery)) {
-                        return (
-                            <tr key={movieName}>
-                                <td>
-                                    {movieName}
-                                </td>
-                                <td>
-                                    {rating}
-                                </td>
-                                <td>
-                                    {duration}
-                                </td>
-                            </tr>
-                        )
-                    } else return <></>;
-                })}
+                ): filteredMovies} 
                 </tbody>
             </table>
         </div>
