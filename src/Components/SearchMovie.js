@@ -49,7 +49,7 @@ const SearchMovie = ({allMovies}) => {
     return (
         <div>
             <div className="mb-3">
-                <label htmlFor="search" className="form-label">Email address</label>
+                <label htmlFor="search" className="form-label">Search</label>
                 <input type="text" className="form-control" placeholder="Search Movie ..." onChange={dbouncedsetSearchQueryFun}></input>
             </div>
             <table className="table">
